@@ -13,7 +13,7 @@
 #include <errno.h>      /* for definition of errno*/
 #include <stdarg.h>     /* ISO C variable aruments*/
 
-static void err_doit(int, int, cost char *, va_list);
+static void err_doit(int, int, const char *, va_list);
 
 /**
  * @brief Nofatal error related to a system call.
@@ -124,7 +124,7 @@ err_quit(const char *fmt, ...) {
  * 
  */
 static void 
-error_diot(int errnoflag, int error, cost char *fmt, va_list ap) {
+err_doit(int errnoflag, int error, const char *fmt, va_list ap) {
     char buf[MAXLINE];
 
     vsnprintf(buf, MAXLINE-1, fmt, ap);

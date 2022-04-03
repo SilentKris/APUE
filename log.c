@@ -21,7 +21,7 @@ static void log_doit(int, int, int, const char *, va_list ap);
  * @brief Caller nust define and set this: nonzero if interactive, zero if daemon.
  * 
  */
-extern int  log_to_stderr;
+__attribute__((weak)) int log_to_stderr = -1;
 
 /**
  * @brief Initilize syslog(), if runnningas daemon.
@@ -50,7 +50,7 @@ log_ret(const char *fmt, ...) {
  * @brief Fatal error related to a system call.
  * Print a message and terminate.
  */
-viod 
+void 
 log_sys(const char *fmt, ...) {
     va_list ap;
 
@@ -65,7 +65,7 @@ log_sys(const char *fmt, ...) {
  * Print a message and return.
  */
 void
-log_msg(const cahr *fmt, ...) {
+log_msg(const char *fmt, ...) {
     va_list ap;
 
     va_start(ap, fmt);
@@ -93,7 +93,8 @@ log_quit(const char *fmt, ...) {
  * Print a message and terminate.
  */
 void 
-log_exit(int error, const char *fmt, ...) {
+log_exit(int error, const char *fmt, ...) 
+{
     va_list ap;
 
     va_start(ap, fmt);
@@ -107,12 +108,12 @@ log_exit(int error, const char *fmt, ...) {
  * Caller specifies "errnoflag" and "Priority".
  */
 static void 
-log_doit(int errnoflag, int error, int priority, const cahr *fmt, va_list ap) {
-    char buf(MAXLINE);
+log_doit(int errnoflag, int error, int priority, const char *fmt, va_list ap) {
+    char buf[MAXLINE];
 
     vsnprintf(buf, MAXLINE-1, fmt, ap);
     if(errnoflag) {
-        snprintf(buf+strlen(buf), MALINE-strlen(buf)-1, ": %s", strerror(error));
+        snprintf(buf+strlen(buf), MAXLINE-strlen(buf)-1, ": %s", strerror(error));
     }
     if(log_to_stderr) {
         fflush(stdout);
