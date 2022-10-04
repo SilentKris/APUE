@@ -1,4 +1,4 @@
-/**
+/*
  * @file APUE.h
  * @author your name (you@domain.com)
  * @brief Our own header, o be included before all standard system headers.
